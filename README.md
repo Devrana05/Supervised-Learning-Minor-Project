@@ -1,79 +1,115 @@
-# CreditWise Loan Approval Notebook
+# CreditWise — Loan Approval Prediction
 
-This README describes the `CreditWise_Loan.ipynb` notebook, which trains a loan approval prediction model using the `loan_approval_data.csv` dataset.
+A machine learning project that predicts loan approval outcomes using classification algorithms. Built as part of a supervised learning study, this project covers the full ML pipeline — from raw data to model comparison and feature engineering.
 
-## Overview
+---
 
-The notebook performs:
-- data loading and missing value handling
-- exploratory data analysis (EDA)
-- categorical encoding
-- feature scaling
-- model training and evaluation using Logistic Regression
+## Project Overview
+
+CreditWise trains and evaluates multiple binary classification models to predict whether a loan application will be approved (`Loan_Approved`: Yes/No). The workflow includes data cleaning, exploratory data analysis, categorical encoding, feature engineering, model training, and performance evaluation across three algorithms.
+
+---
 
 ## Dataset
 
-- `loan_approval_data.csv`
-- Target column: `Loan_Approved`
-- Features include: `Gender`, `Education_Level`, `Employment_Status`, `Marital_Status`, `Loan_Purpose`, `Property_Area`, `Credit_Score`, `DTI_Ratio`, `Savings`, `Loan_Amount`, `Applicant_Income`, `Coapplicant_Income`, `Age`, `Employer_Category`, and more.
+> **Note:** The dataset is not included in this repository. To run the notebook, you will need to provide your own `loan_approval_data.csv` and place it in the project root. Can find on Kaggle.
 
-## Notebook Steps
+- **Rows:** 1,000 applicants (50 missing values per column, imputed)
+- **Target:** `Loan_Approved` (Yes / No) — imbalanced: ~70% No, ~30% Yes
+- **Features:**
 
-1. **Load data**
-   - Read the CSV from the notebook directory.
+| Feature | Type |
+|---|---|
+| `Applicant_Income` | Numerical |
+| `Coapplicant_Income` | Numerical |
+| `Age` | Numerical |
+| `Dependents` | Numerical |
+| `Credit_Score` | Numerical |
+| `Existing_Loans` | Numerical |
+| `DTI_Ratio` | Numerical |
+| `Savings` | Numerical |
+| `Collateral_Value` | Numerical |
+| `Loan_Amount` | Numerical |
+| `Loan_Term` | Numerical |
+| `Gender` | Categorical |
+| `Education_Level` | Categorical |
+| `Employment_Status` | Categorical |
+| `Marital_Status` | Categorical |
+| `Loan_Purpose` | Categorical |
+| `Property_Area` | Categorical |
+| `Employer_Category` | Categorical |
 
-2. **Missing value handling**
-   - Numeric columns: impute missing values using `SimpleImputer(strategy='mean')`
-   - Categorical columns: impute missing values using `SimpleImputer(strategy='most_frequent')`
+---
 
-3. **Exploratory Data Analysis**
-   - Check class balance for loan approval.
-   - Visualize distributions of income, credit score, age, DTI ratio, savings, loan amount, and approval outcomes.
-   - Use boxplots and histograms to inspect relationships between features and the target.
+## Notebook Workflow
 
-4. **Feature preparation**
-   - Remove `Applicant_ID` because it does not affect loan approval probability.
-   - Label-encode `Education_Level` and `Loan_Approved`.
-   - One-hot encode categorical columns:
-     - `Employment_Status`
-     - `Marital_Status`
-     - `Loan_Purpose`
-     - `Property_Area`
-     - `Gender`
-     - `Employer_Category`
+1. **Load & Inspect** — Read the CSV, check for nulls, and review descriptive statistics.
+2. **Data Cleaning** — Impute missing values: mean for numerical columns, mode for categorical columns using `SimpleImputer`.
+3. **EDA** — Visualize class balance, gender split, education levels, and distributions of key numerical features.
+4. **Encoding** — Apply Label Encoding to `Education_Level` and `Loan_Approved`; One-Hot Encoding (drop-first) to remaining categorical columns.
+5. **Correlation Analysis** — Generate a heatmap to identify features most correlated with loan approval.
+6. **Train/Test Split** — 80/20 split with `random_state=42`.
+7. **Feature Scaling** — Standardize numerical features using `StandardScaler` (fit on train, transform on test).
+8. **Baseline Model Training** — Train and evaluate three classifiers: Logistic Regression, k-Nearest Neighbors (k=13), and Gaussian Naive Bayes.
+9. **Feature Engineering** — Add polynomial features (`DTI_Ratio²`, `Credit_Score²`) and retrain all three models to measure improvement.
+10. **Model Comparison** — Select the best model based on **precision** (minimising false approvals).
 
-5. **Correlation analysis**
-   - Compute numerical feature correlations.
-   - Draw a heatmap to understand relationships with `Loan_Approved`.
+---
 
-6. **Train/test split and scaling**
-   - Split data into training and test sets with `test_size=0.2` and `random_state=42`.
-   - Standardize features using `StandardScaler`.
+## Model Results
 
-7. **Model training and evaluation**
-   - Train a `LogisticRegression` model.
-   - Evaluate using:
-     - precision
-     - recall
-     - accuracy
-     - F1 score
-     - confusion matrix
+### Baseline (no feature engineering)
 
-## Requirements
+| Model | Precision | Recall | Accuracy | F1 Score |
+|---|---|---|---|---|
+| Logistic Regression | 0.783 | 0.770 | 86.5% | 0.777 |
+| k-Nearest Neighbors (k=13) | 0.732 | 0.492 | 79.0% | 0.588 |
+| **Naive Bayes** | **0.804** | 0.738 | **86.5%** | **0.769** |
 
-Install the Python libraries:
+### After Feature Engineering
+
+| Model | Precision | Recall | Accuracy | F1 Score |
+|---|---|---|---|---|
+| **Logistic Regression** | **0.790** | **0.803** | **87.5%** | **0.797** |
+| k-Nearest Neighbors (k=13) | 0.737 | 0.459 | 78.5% | 0.566 |
+| Naive Bayes | 0.783 | 0.770 | 86.5% | 0.777 |
+
+> **Best model overall: Logistic Regression after feature engineering** — highest precision and accuracy post-engineering. Naive Bayes leads on baseline precision. kNN underperforms due to the high dimensionality of the encoded feature space.
+
+---
+
+## Why Precision?
+
+In a loan approval context, a **false positive** means approving a loan for someone likely to default — a costly mistake for the lender. Precision (minimising false positives) is therefore the primary evaluation metric over accuracy.
+
+---
+
+## Installation
 
 ```bash
 pip install pandas numpy matplotlib seaborn scikit-learn jupyter
 ```
 
+---
+
 ## Usage
 
-Open `CreditWise_Loan.ipynb` in Jupyter Notebook or VS Code, then run the cells sequentially.
+1. Clone the repository.
+2. Obtain `loan_approval_data.csv` and place it in the project root (not included — see Dataset section).
+3. Open `CreditWise_Loan.ipynb` in Jupyter Notebook or VS Code.
+4. Run all cells in order from top to bottom.
 
-> Make sure `loan_approval_data.csv` is present in the same folder as the notebook.
+---
 
-## Notes
+## Key Takeaways
 
-- The notebook focuses on binary classification for loan approval.
-- Precision is highlighted as an important metric to reduce false positives in the loan approval decision.
+- Mean/mode imputation is a practical strategy for datasets with uniformly distributed missing values.
+- One-hot encoding significantly expands the feature space (8 categorical → 17 binary columns), which hurts kNN but is handled well by Logistic Regression and Naive Bayes.
+- Polynomial features for `DTI_Ratio` and `Credit_Score` improved Logistic Regression precision and recall, confirming non-linear relationships with the target.
+- Precision-recall tradeoffs should drive model selection in financial classification tasks — not accuracy alone.
+
+---
+
+## Tech Stack
+
+`Python` · `pandas` · `NumPy` · `scikit-learn` · `Matplotlib` · `seaborn`
