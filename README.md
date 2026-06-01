@@ -12,7 +12,7 @@ CreditWise trains and evaluates multiple binary classification models to predict
 
 ## Dataset
 
-> **Note:** The dataset is not included in this repository. To run the notebook, you will need to provide your own `loan_approval_data.csv` and place it in the project root. Can find on Kaggle.
+> **Note:** The dataset is not included in this repository. To run the notebook, you will need to provide your own `loan_approval_data.csv` and place it in the project root.Can find on kaggle
 
 - **Rows:** 1,000 applicants (50 missing values per column, imputed)
 - **Target:** `Loan_Approved` (Yes / No) — imbalanced: ~70% No, ~30% Yes
@@ -93,6 +93,8 @@ pip install pandas numpy matplotlib seaborn scikit-learn jupyter
 ---
 
 ## Usage
+
+> **Note:** GitHub may not render the `.ipynb` file correctly. To view and run the notebook, please clone the repo and open it locally in Jupyter Notebook, or upload it to [Google Colab](https://colab.research.google.com/).In case, you want to see it on github, I have uploaded the Code in the md file.
 
 1. Clone the repository.
 2. Obtain `loan_approval_data.csv` and place it in the project root (not included — see Dataset section).
