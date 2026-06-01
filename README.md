@@ -12,7 +12,7 @@ CreditWise trains and evaluates multiple binary classification models to predict
 
 ## Dataset
 
-> **Note:** The dataset is not included in this repository. To run the notebook, you will need to provide your own `loan_approval_data.csv` and place it in the project root.Can find on kaggle
+> **Note:** The dataset is not included in this repository. To run the notebook, you will need to provide your own `loan_approval_data.csv` and place it in the project root. Can find on kaggle
 
 - **Rows:** 1,000 applicants (50 missing values per column, imputed)
 - **Target:** `Loan_Approved` (Yes / No) — imbalanced: ~70% No, ~30% Yes
