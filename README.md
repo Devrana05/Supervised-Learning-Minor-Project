@@ -102,4 +102,14 @@ pip install pandas numpy matplotlib seaborn scikit-learn jupyter
 
 ## Tech Stack
 
-`Python` · `pandas` · `NumPy` · `scikit-learn` · `Matplotlib` · `seaborn`
+`Python` · `Pandas` · `NumPy` · `Matplotlib` · `Seaborn` · `Scikit-learn` · `Naive Bayes` · `KNN` · `Logistic Regression`
+
+---
+
+## Author
+
+**Dev Rana**
+
+B.Tech Computer Science Engineering Student
+
+This project was developed as part of my learning journey in Machine Learning, focusing on Supervised Learning and Loan Approval System.
