@@ -90,18 +90,6 @@ In a loan approval context, a **false positive** means approving a loan for some
 pip install pandas numpy matplotlib seaborn scikit-learn jupyter
 ```
 
----
-
-## Usage
-
-> **Note:** GitHub may not render the `.ipynb` file correctly. To view and run the notebook, please clone the repo and open it locally in Jupyter Notebook, or upload it to [Google Colab](https://colab.research.google.com/).In case, you want to see it on github, I have uploaded the Code in the md file.
-
-1. Clone the repository.
-2. Obtain `loan_approval_data.csv` and place it in the project root (not included — see Dataset section).
-3. Open `CreditWise_Loan.ipynb` in Jupyter Notebook or VS Code.
-4. Run all cells in order from top to bottom.
-
----
 
 ## Key Takeaways
 
